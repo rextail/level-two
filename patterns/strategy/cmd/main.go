@@ -3,23 +3,17 @@ package main
 import "strategy"
 
 func main() {
-	healthy := strategy.NewHealthyWalk("la-la-la", 100)
-	injured := strategy.NewDamagedWalk("oh.. hh..", 50)
-	damaged := strategy.NewDamagedWalk("h-h-h-elp, s-some-b-b-ody", 25)
+	//создадим нового персонажа
 	char := strategy.NewCharacter()
-	if char.HP >= 75 {
-		char.Walk = healthy
-		char.DoWalk()
-		char.HP -= 26
-	}
-	if char.HP >= 25 && char.HP < 75 {
-		char.Walk = injured
-		char.DoWalk()
-		char.HP -= 60
-	}
-	if char.HP > 1 && char.HP < 25 {
-		char.Walk = damaged
-		char.DoWalk()
-		char.Walk = damaged
-	}
+	//обновим алгоритм передвижения
+	char.UpdateWalkingStrategy()
+	char.DoWalk()
+	//поцарапаем персонажа, чтобы изменить его ходьбу
+	char.HP -= 30
+	char.UpdateWalkingStrategy()
+	char.DoWalk()
+	//травмируем персонажа, чтобы изменить его ходьбу
+	char.HP -= 50
+	char.UpdateWalkingStrategy()
+	char.DoWalk()
 }
