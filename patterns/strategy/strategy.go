@@ -10,15 +10,6 @@ package strategy
 // Когда персонаж имеет достаточно здоровья, у него обычная анимация ходьбы.
 // Когда персонаж немного просаживается по здоровью, он начинает хромать, скорость медленная
 // Когда персонаж значительно просаживается по здоровью, он начинает ползти, скорость очень медленная
-const (
-	damagedSpeed = 25
-	injuredSpeed = 50
-	healthySpeed = 100
-)
-
-var healthy = NewHealthyWalk("la-la-la", healthySpeed)
-var injured = NewDamagedWalk("oh.. hh..", injuredSpeed)
-var damaged = NewDamagedWalk("h-h-h-elp, s-some-b-b-ody", damagedSpeed)
 
 type Walker interface {
 	Walk()
@@ -27,6 +18,10 @@ type Walker interface {
 type Character struct {
 	HP   byte
 	Walk Walker //🐺🐺🐺
+}
+
+func (c *Character) SetWalker(walker Walker) {
+	c.Walk = walker
 }
 
 func NewCharacter() *Character {
@@ -39,15 +34,10 @@ func (c *Character) DoWalk() {
 	c.Walk.Walk()
 }
 
-func (c *Character) UpdateWalkingStrategy() {
-	if c.HP >= 75 {
-		c.Walk = healthy
+//Плюсы:
+//1. Легкая замена алгоритмов работы в рантайме
+//2. Соответствует принципу OCP
 
-	}
-	if c.HP >= 25 && c.HP < 75 {
-		c.Walk = injured
-	}
-	if c.HP > 1 && c.HP < 25 {
-		c.Walk = damaged
-	}
-}
+//Минусы:
+//1. Дополнительные классы усложняют программу
+//2. Клиент должен знать, как выбрать подходящий алгоритм
