@@ -26,6 +26,6 @@ func CurrentTime() {
 	if err != nil {
 		log.Fatalf("%s %v", op, err)
 	}
-	srvTime := time.Now().Add(resp.ClockOffset).Format(time.TimeOnly)
-	fmt.Println(srvTime)
+	curTime := time.Now().Add(resp.ClockOffset).Format(time.TimeOnly)
+	fmt.Println(curTime)
 }
