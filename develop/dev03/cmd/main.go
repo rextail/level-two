@@ -2,8 +2,8 @@ package main
 
 import (
 	"dev03/internal/config"
-	"dev03/internal/in"
-	"dev03/internal/out"
+	"dev03/internal/format"
+	"dev03/internal/print"
 	"dev03/internal/sort"
 	"fmt"
 	"log"
@@ -16,7 +16,7 @@ func main() {
 
 	log.Println("initialized config")
 
-	table, err := in.ToTable(cfg.Filename, cfg.InputOpts)
+	table, err := format.ToTable(cfg.Filename, cfg.InputOpts)
 	if err != nil {
 		log.Fatalf("%s", err.Error())
 	}
@@ -30,7 +30,7 @@ func main() {
 
 	fmt.Println("sorting finished")
 
-	err = out.WriteResult(cfg.Filename, res)
+	err = print.WriteResult(cfg.Filename, res)
 	if err != nil {
 		log.Fatalf("%s", err.Error())
 	}
