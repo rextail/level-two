@@ -1,0 +1,3 @@
+banana move 1 2 3
+apple do 0 1 4
+jigurda chess -5 4 0
