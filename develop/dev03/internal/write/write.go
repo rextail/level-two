@@ -1,4 +1,4 @@
-package print
+package write
 
 import (
 	"dev03/internal/sort"

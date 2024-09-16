@@ -3,8 +3,8 @@ package main
 import (
 	"dev03/internal/config"
 	"dev03/internal/format"
-	"dev03/internal/print"
 	"dev03/internal/sort"
+	"dev03/internal/write"
 	"fmt"
 	"log"
 )
@@ -30,7 +30,7 @@ func main() {
 
 	fmt.Println("sorting finished")
 
-	err = print.WriteResult(cfg.Filename, res)
+	err = write.WriteResult(cfg.Filename, res)
 	if err != nil {
 		log.Fatalf("%s", err.Error())
 	}
