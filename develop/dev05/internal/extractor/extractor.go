@@ -26,6 +26,7 @@ func New(cfg config.Config) *Extractor {
 	}
 }
 
+// ExtractLines возвращает строки по указанным индексам
 func (e *Extractor) ExtractLines(data io.Reader, indexes []int) ([]string, error) {
 
 	if len(indexes) == 0 {

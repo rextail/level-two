@@ -35,7 +35,7 @@ func MustParseConfig() *Config {
 
 	flag.BoolVar(&cfg.InputOpts.IgnoreEndingSpaces, "b", false, "ignore ending spaces")
 
-	flag.BoolVar(&cfg.SortOpts.Unique, "u", false, "only unique values are included format the result")
+	flag.BoolVar(&cfg.SortOpts.Unique, "u", false, "only unique values are included extractor the result")
 	flag.IntVar(&cfg.SortOpts.Column, "k", 0, "column to sort")
 	flag.BoolVar(&cfg.SortOpts.Reverse, "r", false, "descending sort")
 	flag.BoolVar(&cfg.SortOpts.Numeric, "n", false, "sort by numeric value")

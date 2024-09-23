@@ -24,7 +24,7 @@ func WriteResult(filename string, result sort.SortResult) error {
 	}
 	// Пишем в файл
 	if _, err = file.Write([]byte(res)); err != nil {
-		return fmt.Errorf("can't write data format output file: %v", err)
+		return fmt.Errorf("can't write data extractor output file: %v", err)
 	}
 	return nil
 }

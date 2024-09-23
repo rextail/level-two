@@ -49,7 +49,7 @@ func FindAllAnagramms(words []string) map[string][]string {
 			//Если это первый элемент множества
 			roots[sorted] = word
 		}
-		//достаем множество по первому элементу этого множества(roots[sorted) и добавляем туда еще один элемент
+		//достаем множество по первому элементу этого множества(roots[sorted]) и добавляем туда еще один элемент
 		if _, ok := used[word]; !ok {
 			//если этот элемент еще не встречался
 			res[roots[sorted]] = append(res[roots[sorted]], word)

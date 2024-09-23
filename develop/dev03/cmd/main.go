@@ -1,7 +1,7 @@
 package main
 
 import (
-	"dev03/internal/config"
+	"dev03/config"
 	"dev03/internal/format"
 	"dev03/internal/sort"
 	"dev03/internal/write"

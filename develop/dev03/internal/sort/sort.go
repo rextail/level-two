@@ -1,7 +1,7 @@
 package sort
 
 import (
-	"dev03/internal/config"
+	"dev03/config"
 	"dev03/internal/sort/funcs"
 	"fmt"
 	"slices"
