@@ -9,9 +9,11 @@ import (
 	"dev11/lib/slogkz"
 	"encoding/json"
 	"errors"
+	"fmt"
 	v10 "github.com/go-playground/validator/v10"
 	"log/slog"
 	"net/http"
+	"strconv"
 )
 
 type EventCreator interface {
@@ -20,9 +22,17 @@ type EventCreator interface {
 
 // New возвращает функцию-обработчик запросов на создание события. Принимает объект, непосредственно занимающийся
 // созданием события.
-func New(log *slog.Logger, validator v10.Validate, creater EventCreator) http.HandlerFunc {
+func New(log *slog.Logger, validator *v10.Validate, creater EventCreator) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		const op = `transport.http.handlers.create.New`
+		const op = `transport.http.handlers.post.create.New`
+
+		if r.Method != http.MethodPost {
+			fmt.Printf("%s: http method check failed", op)
+
+			send.ErrorJSON(w, response.Error("not allowed method ", strconv.Itoa(http.StatusMethodNotAllowed)))
+
+			return
+		}
 
 		log = log.With(
 			slog.String("op", op),

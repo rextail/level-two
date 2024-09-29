@@ -7,9 +7,11 @@ import (
 	"dev11/lib/http/response"
 	"dev11/lib/slogkz"
 	"encoding/json"
+	"fmt"
 	v10 "github.com/go-playground/validator/v10"
 	"log/slog"
 	"net/http"
+	"strconv"
 )
 
 type EventUpdater interface {
@@ -18,9 +20,17 @@ type EventUpdater interface {
 
 // New возвращает функцию-обработчик запросов на обновление события. Принимает объект, непосредственно занимающийся
 // обновлением события.
-func New(log *slog.Logger, validator v10.Validate, updater EventUpdater) http.HandlerFunc {
+func New(log *slog.Logger, validator *v10.Validate, updater EventUpdater) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		const op = `transport.http.handlers.update.New`
+		const op = `transport.http.handlers.post.update.New`
+
+		if r.Method != http.MethodPost {
+			fmt.Printf("%s: http method check failed", op)
+
+			send.ErrorJSON(w, response.Error("not allowed method ", strconv.Itoa(http.StatusMethodNotAllowed)))
+
+			return
+		}
 
 		log = log.With(
 			slog.String("op", op),

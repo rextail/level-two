@@ -22,25 +22,20 @@ func DefaultTelnetListener() (*TelnetListener, error) {
 	}, nil
 }
 
-func (t *TelnetListener) HandleConnections(stop <-chan struct{}) {
-	const op = "listener.server.HandleConnections"
+func (t *TelnetListener) HandleConnections() {
+	const op = "listener.listener.HandleConnections"
 	for {
-		select {
-		case <-stop:
-			return
-		default:
-			conn, err := t.telnet.Accept()
-			if err != nil {
-				log.Printf("%s: listening to incoming connection failed: %v", op, err)
-				continue
-			}
-			go func() {
-				err = t.handleConnection(conn)
-				if err != nil {
-					log.Printf("%v", err)
-				}
-			}()
+		conn, err := t.telnet.Accept()
+		if err != nil {
+			log.Printf("%s: listening to incoming connection failed: %v", op, err)
+			continue
 		}
+		go func() {
+			err = t.handleConnection(conn)
+			if err != nil {
+				log.Printf("%v", err)
+			}
+		}()
 	}
 }
 

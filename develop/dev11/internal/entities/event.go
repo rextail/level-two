@@ -1,27 +1,27 @@
-package entity
+package entities
 
 type Event struct {
-	Title       string
-	Date        string
-	Description string
+	Title       string `json:"title"`
+	Date        string `json:"date"`
+	Description string `json:"description"`
 }
 
 type CreateEventRequest struct {
-	Title       string
-	Date        string
-	Description string
+	Title       string `json:"title" validate:"required"`
+	Date        string `json:"date" validate:"required"`
+	Description string `json:"description"`
 }
 
 type UpdateEventRequest struct {
-	Title       string
-	Date        string
-	Description string
+	Title       string `json:"title" validate:"required"`
+	Date        string `json:"date"`
+	Description string `json:"description"`
 }
 
 type DeleteRequest struct {
-	Title string
+	Title string `json:"title" validate:"required"`
 }
 
 type EventsByTimeRequest struct {
-	Time string
+	TimeFilter string `json:"time_filter"`
 }

@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type config struct {
+type Config struct {
 	Host    string
 	Port    string
 	Timeout string

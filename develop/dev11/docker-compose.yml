@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: rextail        # Замените на ваше имя пользователя
+      POSTGRES_PASSWORD: s3cr7tp4ss     # Замените на ваш пароль
+      POSTGRES_DB: events                 # Создаваемая база данных
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Для сохранения данных
+
+volumes:
+  postgres_data:

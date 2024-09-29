@@ -6,6 +6,12 @@ import (
 	"net/http"
 )
 
+func ResultJSON(w http.ResponseWriter, resp response.Response) {
+	w.Header().Set("Content-Type", "application/json")
+
+	json.NewEncoder(w).Encode(resp)
+}
+
 func ErrorJSON(w http.ResponseWriter, resp response.Response) {
 	w.Header().Set("Content-Type", "application/json")
 
