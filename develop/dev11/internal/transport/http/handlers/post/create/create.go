@@ -29,7 +29,7 @@ func New(log *slog.Logger, validator *v10.Validate, creater EventCreator) http.H
 		if r.Method != http.MethodPost {
 			fmt.Printf("%s: http method check failed", op)
 
-			send.ErrorJSON(w, response.Error("not allowed method ", strconv.Itoa(http.StatusMethodNotAllowed)))
+			send.SendJSON(w, response.Error("not allowed method ", strconv.Itoa(http.StatusMethodNotAllowed)))
 
 			return
 		}
@@ -46,7 +46,7 @@ func New(log *slog.Logger, validator *v10.Validate, creater EventCreator) http.H
 		if err := decoder.Decode(&req); err != nil {
 			log.Error("failed to decode request", slogkz.Err(err))
 
-			send.ErrorJSON(w, response.Error(err.Error(), response.OtherErrCode))
+			send.SendJSON(w, response.Error(err.Error(), response.OtherErrCode))
 
 			return
 		}
@@ -55,7 +55,7 @@ func New(log *slog.Logger, validator *v10.Validate, creater EventCreator) http.H
 
 			log.Error("failed to validate request", slogkz.Err(err))
 
-			send.ErrorJSON(w, response.ValidationError(validateErr))
+			send.SendJSON(w, response.ValidationError(validateErr))
 
 			return
 		}
@@ -64,15 +64,15 @@ func New(log *slog.Logger, validator *v10.Validate, creater EventCreator) http.H
 			log.Error("failed to create event", slogkz.Err(err))
 
 			if errors.Is(err, dberrs.ErrorNotUniqueTitle) {
-				send.ErrorJSON(w, response.Error("event with this title already exists", response.UsecaseErrCode))
+				send.SendJSON(w, response.Error("event with this title already exists", response.UsecaseErrCode))
 				return
 			}
 
-			send.ErrorJSON(w, response.Error(err.Error(), response.UsecaseErrCode))
+			send.SendJSON(w, response.Error(err.Error(), response.UsecaseErrCode))
 
 			return
 		}
 
-		send.OkJSON(w)
+		send.SendJSON(w, response.OK())
 	}
 }

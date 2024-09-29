@@ -27,7 +27,7 @@ func New(log *slog.Logger, validator *v10.Validate, updater EventUpdater) http.H
 		if r.Method != http.MethodPost {
 			fmt.Printf("%s: http method check failed", op)
 
-			send.ErrorJSON(w, response.Error("not allowed method ", strconv.Itoa(http.StatusMethodNotAllowed)))
+			send.SendJSON(w, response.Error("not allowed method ", strconv.Itoa(http.StatusMethodNotAllowed)))
 
 			return
 		}
@@ -44,7 +44,7 @@ func New(log *slog.Logger, validator *v10.Validate, updater EventUpdater) http.H
 		if err := decoder.Decode(&req); err != nil {
 			log.Error("failed to decode request", slogkz.Err(err))
 
-			send.ErrorJSON(w, response.Error(err.Error(), response.OtherErrCode))
+			send.SendJSON(w, response.Error(err.Error(), response.OtherErrCode))
 
 			return
 		}
@@ -53,7 +53,7 @@ func New(log *slog.Logger, validator *v10.Validate, updater EventUpdater) http.H
 
 			log.Error("failed to validate request", slogkz.Err(err))
 
-			send.ErrorJSON(w, response.ValidationError(validateErr))
+			send.SendJSON(w, response.ValidationError(validateErr))
 
 			return
 		}
@@ -61,11 +61,11 @@ func New(log *slog.Logger, validator *v10.Validate, updater EventUpdater) http.H
 		if err := updater.UpdateEvent(r.Context(), req); err != nil {
 			log.Error("failed to update event", slogkz.Err(err))
 
-			send.ErrorJSON(w, response.Error(err.Error(), response.UsecaseErrCode))
+			send.SendJSON(w, response.Error(err.Error(), response.UsecaseErrCode))
 
 			return
 		}
 
-		send.OkJSON(w)
+		send.SendJSON(w, response.OK())
 	}
 }

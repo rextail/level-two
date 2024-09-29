@@ -24,7 +24,7 @@ func New(log *slog.Logger, eventer YearEventer) http.HandlerFunc {
 		if r.Method != http.MethodGet {
 			fmt.Printf("%s: http method check failed", op)
 
-			send.ErrorJSON(w, response.Error("not allowed method ", strconv.Itoa(http.StatusMethodNotAllowed)))
+			send.SendJSON(w, response.Error("not allowed method ", strconv.Itoa(http.StatusMethodNotAllowed)))
 
 			return
 		}
@@ -38,11 +38,11 @@ func New(log *slog.Logger, eventer YearEventer) http.HandlerFunc {
 		if err != nil {
 			log.Error("Error", slogkz.Err(err))
 
-			send.ErrorJSON(w, response.Error(err.Error(), response.UsecaseErrCode))
+			send.SendJSON(w, response.Error(err.Error(), response.UsecaseErrCode))
 
 			return
 		}
 
-		send.ResultJSON(w, response.Result(events))
+		send.SendJSON(w, response.Result(events))
 	}
 }
